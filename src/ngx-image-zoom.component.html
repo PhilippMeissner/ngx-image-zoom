@@ -1,4 +1,5 @@
 <div #zoomContainer class="ngxImageZoomContainer"
+     (window:resize)="onWindowResized()"
      [style.width.px]="this.thumbWidth" [style.height.px]="this.thumbHeight">
 
     <img #imageThumbnail class="ngxImageZoomThumbnail" [src]="thumbImage" (load)="onThumbImageLoaded()"/>

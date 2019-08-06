@@ -1,4 +1,5 @@
 import { AfterViewInit, Component, ElementRef, EventEmitter, Input, OnChanges, OnInit, Output, Renderer2, ViewChild } from '@angular/core';
+import { debounce } from 'lodash-es';
 
 export interface Coord {
     x: number;
@@ -20,6 +21,8 @@ export class NgxImageZoomComponent implements OnInit, OnChanges, AfterViewInit {
 
     @Output() onZoomScroll = new EventEmitter<number>();
     @Output() onZoomPosition = new EventEmitter<Coord>();
+
+    public onWindowResized = debounce(this.windowResized, 250);
 
     public display: string;
     public fullImageTop: number;
@@ -423,5 +426,9 @@ export class NgxImageZoomComponent implements OnInit, OnChanges, AfterViewInit {
 
         this.xRatio = (this.magnifiedWidth - this.thumbWidth) / this.thumbWidth;
         this.yRatio = (this.magnifiedHeight - this.thumbHeight) / this.thumbHeight;
+    }
+
+    private windowResized() {
+        this.checkImagesLoaded();
     }
 }
